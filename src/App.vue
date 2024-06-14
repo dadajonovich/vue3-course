@@ -1,20 +1,19 @@
 <template>
   <div class="app">
-    <form>
-      <h4>Создание поста</h4>
-      <input class="input" type="text" placeholder="Название" />
-      <input class="input" type="text" placeholder="Описание" />
-      <button class="btn" @click="createPost">Создать</button>
-    </form>
-    <div class="post" v-for="post in posts">
-      <div><strong>Название: </strong>{{ post.title }}</div>
-      <div><strong>Описание: </strong>{{ post.body }}</div>
-    </div>
+    <post-form @create="createPost" />
+    <post-list :posts="posts" />
   </div>
 </template>
 
 <script>
+import PostForm from './components/PostForm.vue';
+import PostList from './components/PostList.vue';
+
 export default {
+  components: {
+    PostList,
+    PostForm
+  },
   data() {
     return {
       posts: [
@@ -26,7 +25,10 @@ export default {
     };
   },
   methods: {
-    createPost() {}
+    createPost(post) {
+      console.log(post);
+      this.posts.push(post);
+    }
   }
 };
 </script>
@@ -40,32 +42,5 @@ export default {
 
 .app {
   padding: 20px;
-}
-
-.post {
-  padding: 15px;
-  border: solid 2px teal;
-  margin-top: 15px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.input {
-  width: 100%;
-  border: 1px solid teal;
-  padding: 10px 15px;
-  margin-top: 15px;
-}
-
-.btn {
-  margin-top: 15px;
-  align-self: flex-end;
-  padding: 10px 15px;
-  background: none;
-  color: teal;
-  border: 1px solid teal;
 }
 </style>
